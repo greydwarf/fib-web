@@ -9,6 +9,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.web.client.RestClientException;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -20,6 +21,12 @@ class FibWebApplicationIT {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Test
+    void mainShouldNotThrow() {
+        assertDoesNotThrow(() -> {
+            FibWebApplication.main(new String[] {});
+        });
+    }
     @Test
     void fibonacciShouldReturnNumber() throws Exception, RestClientException {
         var result = restTemplate.getForObject("http://localhost:" + port + "/compute/8", Integer.class);
